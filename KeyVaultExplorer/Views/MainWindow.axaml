@@ -10,6 +10,8 @@
     xmlns:vm="using:KeyVaultExplorer.ViewModels"
     Title="Key Vault Explorer"
     Width="900"
+        xmlns:vm="using:KeyVaultExplorer.ViewModels"
+
     Height="500"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -21,6 +23,10 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
+   <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
  <NativeMenu.Menu>
         <NativeMenu>
             <NativeMenuItem Header="Account">
@@ -28,7 +34,7 @@
                     <NativeMenu>
                         <NativeMenuItem Header="Login" />
                         <NativeMenuItem Header="Logout" />
-                        <NativeMenuItem Header="email@example.com" IsEnabled="False" />
+                        <NativeMenuItem Header="{Binding Email}" IsEnabled="False" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
