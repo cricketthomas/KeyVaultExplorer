@@ -1,10 +1,12 @@
-<UserControl
+<Window
     x:Class="KeyVaultExplorer.AboutPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:KeyVaultExplorer.ViewModels"
+    Width="350"
+    Height="250"
     d:DesignHeight="200"
     d:DesignWidth="380"
     x:DataType="vm:AppViewModel"
@@ -20,4 +22,4 @@
         <Label HorizontalAlignment="Center" Content="v0.1.0" />
     </StackPanel>
 
-</UserControl>
+</Window>
