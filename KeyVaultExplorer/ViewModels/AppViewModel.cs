@@ -13,7 +13,7 @@ namespace KeyVaultExplorer.ViewModels;
 public partial class AppViewModel : ViewModelBase
 {
 
-    private readonly AuthService _authService;
+    // private readonly AuthService _authService;
 
     [ObservableProperty]
     public string email;
@@ -23,7 +23,7 @@ public partial class AppViewModel : ViewModelBase
     public bool isAuthenticated = false;
     public AppViewModel()
     {
-        _authService = Defaults.Locator.GetRequiredService<AuthService>();
+        // _authService = Defaults.Locator.GetRequiredService<AuthService>();
 
     }
 
@@ -35,6 +35,7 @@ public partial class AppViewModel : ViewModelBase
             Title = "About Key Vault Explorer",
             Width = 380,
             Height = 200,
+            CanResize = false,
             SizeToContent = SizeToContent.Manual,
             WindowStartupLocation = WindowStartupLocation.Manual,
         };
@@ -43,20 +44,5 @@ public partial class AppViewModel : ViewModelBase
         aboutWindow.ShowDialog(top);
     }
 
-    public async Task RefreshTokenAndGetAccountInformation()
-    {
-        var cancellation = new CancellationToken();
-        var account = await _authService.RefreshTokenAsync(cancellation);
-
-        if (account is null)
-            account = await _authService.LoginAsync(cancellation);
-        //.ClaimsPrincipal.Identities.First().FindFirst("email").Value.ToLowerInvariant();
-        var identity = account.ClaimsPrincipal.Identities.First();
-        var email = identity.FindAll("email").First().Value ?? account.Account.Username;
-
-        string[] name = identity.FindAll("name").First().Value.Split(" ");
-
-        Email = email.ToLowerInvariant();
-
-    }
+  
 }

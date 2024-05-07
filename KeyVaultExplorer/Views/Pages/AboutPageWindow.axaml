@@ -4,11 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="using:FluentAvalonia.UI.Controls"
     xmlns:vm="using:KeyVaultExplorer.ViewModels"
     Title="About"
     Width="350"
+    Background="{x:Null}"
     Height="200"
+    WindowStartupLocation="CenterScreen"
     x:DataType="vm:AppViewModel"
     mc:Ignorable="d">
 
@@ -17,11 +18,11 @@
     </Design.DataContext>
 
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <ui:BitmapIcon
+        <Image
             Width="90"
             Height="90"
             RenderOptions.BitmapInterpolationMode="HighQuality"
-            UriSource="avares://KeyVaultExplorer/Assets/kv-icon.png" />
+            Source="avares://KeyVaultExplorer/Assets/kv-icon.png" />
         <Label Content="Key Vault Explorer" />
         <Label HorizontalAlignment="Center" Content="v0.1.0" />
     </StackPanel>
