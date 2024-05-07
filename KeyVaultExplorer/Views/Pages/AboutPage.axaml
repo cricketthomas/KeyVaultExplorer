@@ -5,18 +5,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:KeyVaultExplorer.ViewModels"
-    d:DesignHeight="400"
-    d:DesignWidth="600"
-    x:DataType="vm:AboutViewModel"
+    d:DesignHeight="200"
+    d:DesignWidth="380"
+    x:DataType="vm:AppViewModel"
     mc:Ignorable="d">
 
 
     <Design.DataContext>
-        <vm:AboutViewModel />
+        <vm:AppViewModel />
     </Design.DataContext>
 
-    <StackPanel>
-       <Label Text="Key Vault Explorer" />
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Label Content="Key Vault Explorer" />
+        <Label HorizontalAlignment="Center" Content="v0.1.0" />
     </StackPanel>
 
 </UserControl>

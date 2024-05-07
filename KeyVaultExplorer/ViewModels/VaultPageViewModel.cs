@@ -1,8 +1,10 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Notifications;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Input.Platform;
+using Avalonia.Layout;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Azure.Security.KeyVault.Keys;
@@ -411,9 +413,9 @@ public partial class VaultPageViewModel : ViewModelBase
 
         //taskDialog.TitleBar.ExtendsContentIntoTitleBar = isMac;
         //taskDialog.TitleBar.TitleBarHitTestType = TitleBarHitTestType.Complex;
+        var top = Avalonia.Application.Current.GetTopLevel() as IClassicDesktopStyleApplicationLifetime;
 
+        taskDialog.Show(top.MainWindow);
         // open the window with parent on windows but not mac.
-        var top = Avalonia.Application.Current.GetTopLevel();
-        taskDialog.Show(top);
     }
 }
