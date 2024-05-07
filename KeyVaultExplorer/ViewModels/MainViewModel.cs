@@ -19,9 +19,6 @@ public partial class MainViewModel : ViewModelBase
     public string email;
 
     [ObservableProperty]
-    public string initials;
-
-    [ObservableProperty]
     public AuthenticatedUserClaims authenticatedUserClaims;
 
     [ObservableProperty]
@@ -49,8 +46,6 @@ public partial class MainViewModel : ViewModelBase
         var email = identity.FindAll("email").First().Value ?? account.Account.Username;
 
         string[] name = identity.FindAll("name").First().Value.Split(" ");
-        if (name.Length > 1)
-            Initials = name[0][0].ToString().ToUpperInvariant() + name[1][0].ToString().ToUpperInvariant();
 
         Email = email.ToLowerInvariant();
 
