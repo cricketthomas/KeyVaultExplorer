@@ -8,7 +8,7 @@ namespace KeyVaultExplorer.Services;
 
 public static class ServiceCollectionExtensions {
     public static void AddCommonServices(this IServiceCollection collection) {
-         collection.AddMemoryCache();
+        collection.AddMemoryCache();
         collection.AddSingleton<AuthService>();
         collection.AddSingleton<VaultService>();
         collection.AddSingleton<TabViewPageViewModel>();

@@ -37,7 +37,6 @@ internal class Program
         => AppBuilder.Configure<App>()
                  .AfterSetup(_ =>
                  {
-                     App.ConfigureDesktopServices();
                      App.CreateDesktopResources();
                      // HACK. https://github.com/AvaloniaUI/Avalonia/issues/14059
                      var x = Comparer<int>.Default;
