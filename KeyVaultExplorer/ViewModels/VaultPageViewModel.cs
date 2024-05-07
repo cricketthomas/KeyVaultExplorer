@@ -411,9 +411,7 @@ public partial class VaultPageViewModel : ViewModelBase
             // Background = null,
         };
 
-        //taskDialog.TitleBar.ExtendsContentIntoTitleBar = isMac;
-        //taskDialog.TitleBar.TitleBarHitTestType = TitleBarHitTestType.Complex;
-        taskDialog.Show();
-        // open the window with parent on windows but not mac.
+        var topLevel = Avalonia.Application.Current.GetTopLevel() as AppWindow;
+        taskDialog.ShowDialog(topLevel);
     }
 }
