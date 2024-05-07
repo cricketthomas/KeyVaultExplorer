@@ -26,6 +26,8 @@ The authentication and credentials storage uses [Microsoft.Identity.Client.Exten
 The security is pulled directly from this document: https://github.com/AzureAD/microsoft-authentication-extensions-for-dotnet/wiki/Cross-platform-Token-Cache#configuring-the-token-cache
 
 ## Screenshots
+<img width="1419" alt="Dark" src="https://github.com/cricketthomas/KeyVaultExplorer/assets/15821271/365cea71-2a68-4cab-997c-2631922e7bc6">
+<img width="1426" alt="Light" src="https://github.com/cricketthomas/KeyVaultExplorer/assets/15821271/41793cfa-eb01-4954-b062-56072d19d5ea">
 
 
 ## Running the application:
