@@ -25,6 +25,7 @@ public partial class MainViewModel : ViewModelBase
     public bool isAuthenticated = false;
 
     private readonly AuthService _authService;
+
     public NavigationFactory NavigationFactory { get; }
 
     public MainViewModel()
@@ -61,7 +62,20 @@ public partial class MainViewModel : ViewModelBase
     }
 
 
-    
+
+     [RelayCommand]
+    private async Task ForceSignIn()
+    {
+        var cancellation = new CancellationToken();
+        var account = await _authService.LoginAsync(cancellation);
+        Email = account.ClaimsPrincipal.Identities.First().FindFirst("email").Value;
+    }
+
+    [RelayCommand]
+    private async Task SignOut()
+    {
+        await _authService.RemoveAccount();
+    }
 
 }
 
