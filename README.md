@@ -39,11 +39,15 @@ The code is very much in the learning phase of things at the moment, with lots o
 
 - ## WindowsOS
 
+  Download from the Microsoft Store:
+  
   Run the following scripts check the publish directory for a folder.
   run `.\KeyVaultExplorer\build.ps1 -RunBuild -Platform net8.0 -Runtime win-x64`
   run `.\KeyVaultExplorer\build.ps1 -RunBuild -Platform net8.0 -Runtime win-arm64`
 
 - ## macOS
+  Download from the release section:
+  
   Run the following scripts and a 'Key Vault Explorer.app' mac os package will be generated in the publish directory. Move this to "Applications".
   run `.\KeyVaultExplorer\build.ps1 -RunBuild -Platform net8.0 -Runtime osx-x64`
   run `.\KeyVaultExplorer\build.ps1 -RunBuild -Platform net8.0 -Runtime osx-arm64`
