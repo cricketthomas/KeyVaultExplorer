@@ -49,7 +49,6 @@ internal class Program
                      var gn = Comparer<Guid?>.Default;
                      var dtn = Comparer<DateTime?>.Default;
                      var z = Comparer<PlatformID>.Default;
-
                  })
                 .UsePlatformDetect()
                 .LogToTrace();

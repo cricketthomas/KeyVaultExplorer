@@ -17,6 +17,12 @@ namespace KeyVaultExplorer;
 
 public partial class App : Application
 {
+
+    public App()
+    {
+        DataContext = new AppViewModel();
+    }
+
     public static void ConfigureDesktopServices()
     {
         IServiceCollection serviceCollection = new ServiceCollection();
@@ -46,15 +52,14 @@ public partial class App : Application
         string settingsPath = Path.Combine(Constants.LocalAppDataFolder, "settings.json");
         if (!File.Exists(settingsPath))
         {
-            var s = """
+            File.WriteAllText(settingsPath, """
                 {
                     "BackgroundTransparency": false,
                     "NavigationLayoutMode": "Left",
                     "AppTheme": "System",
                     "PaneDisplayMode": "inline"
                 }
-                """;
-            File.WriteAllText(settingsPath, s);
+                """);
         }
     }
 

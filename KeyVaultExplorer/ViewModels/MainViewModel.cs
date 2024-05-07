@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FluentAvalonia.UI.Controls;
 using KeyVaultExplorer.Models;
 using KeyVaultExplorer.Services;
@@ -35,6 +36,7 @@ public partial class MainViewModel : ViewModelBase
         NavigationFactory = new NavigationFactory();
     }
 
+  
     public async Task RefreshTokenAndGetAccountInformation()
     {
         var cancellation = new CancellationToken();
