@@ -10,11 +10,10 @@
     xmlns:vm="using:KeyVaultExplorer.ViewModels"
     Title="Key Vault Explorer"
     Width="900"
-        xmlns:vm="using:KeyVaultExplorer.ViewModels"
-
     Height="500"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    x:DataType="vm:MainViewModel"
     ExtendClientAreaChromeHints="Default, PreferSystemChrome"
     ExtendClientAreaToDecorationsHint="{OnPlatform False,
                                                    macOS=True}"
@@ -23,11 +22,11 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
-   <Design.DataContext>
+    <Design.DataContext>
         <vm:MainViewModel />
     </Design.DataContext>
 
- <NativeMenu.Menu>
+    <NativeMenu.Menu>
         <NativeMenu>
             <NativeMenuItem Header="Account">
                 <NativeMenuItem.Menu>
