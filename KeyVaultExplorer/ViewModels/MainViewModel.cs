@@ -59,6 +59,10 @@ public partial class MainViewModel : ViewModelBase
 
         IsAuthenticated = _authService.IsAuthenticated;
     }
+
+
+    
+
 }
 
 public class NavigationFactory : INavigationPageFactory

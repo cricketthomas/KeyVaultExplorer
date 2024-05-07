@@ -47,18 +47,7 @@
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
-
-            <NativeMenuItem Header="View">
-                <NativeMenu>
-                    <NativeMenuItem Header="Toggle" ToggleType="CheckBox">
-                        <NativeMenu>
-                            <NativeMenuItem Header="Option 1" />
-                            <NativeMenuItem Header="Option 2" />
-                            <NativeMenuItem Header="Option 3" />
-                        </NativeMenu>
-                    </NativeMenuItem>
-                </NativeMenu>
-            </NativeMenuItem>
+         
         </NativeMenu>
     </NativeMenu.Menu>
 
