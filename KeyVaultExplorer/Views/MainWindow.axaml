@@ -38,16 +38,6 @@
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
 
-            <NativeMenuItem Header="Options">
-                <NativeMenuItem.Menu>
-                    <NativeMenu>
-                        <NativeMenuItem Header="Open" />
-                        <NativeMenuItemSeparator />
-                        <NativeMenuItem Header="Exit" />
-                    </NativeMenu>
-                </NativeMenuItem.Menu>
-            </NativeMenuItem>
-
             <NativeMenuItem Header="Help">
                 <NativeMenuItem.Menu>
                     <NativeMenu>

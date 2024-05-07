@@ -21,10 +21,6 @@ public partial class TabViewPage : UserControl
         //var vm = new TabViewPageViewModel();
         //KeyUp += TabViewPage_KeyUpFocusSearchBox;
         DataContext = Defaults.Locator.GetRequiredService<TabViewPageViewModel>();
-        // TabViewDoc.SelectionChanged += TabViewDoc_SelectionChanged;
-
-        var dragRegion = this.FindControl<Panel>("CustomDragRegion");
-        dragRegion.MinWidth = FlowDirection == Avalonia.Media.FlowDirection.LeftToRight ? 138 : 138;
         AddHandler(PaneToggledRoutedEvent, OnPaneToggledRoutedEvent, RoutingStrategies.Tunnel, handledEventsToo: false);
     }
 
