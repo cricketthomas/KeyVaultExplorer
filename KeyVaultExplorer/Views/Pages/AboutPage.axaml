@@ -1,0 +1,22 @@
+<UserControl
+    x:Class="KeyVaultExplorer.AboutPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:KeyVaultExplorer.ViewModels"
+    d:DesignHeight="400"
+    d:DesignWidth="600"
+    x:DataType="vm:AboutViewModel"
+    mc:Ignorable="d">
+
+
+    <Design.DataContext>
+        <vm:AboutViewModel />
+    </Design.DataContext>
+
+    <StackPanel>
+       <Label Text="Key Vault Explorer" />
+    </StackPanel>
+
+</UserControl>

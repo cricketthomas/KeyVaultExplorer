@@ -62,7 +62,7 @@ public partial class VaultPageViewModel : ViewModelBase
         _settingsPageViewModel = Defaults.Locator.GetRequiredService<SettingsPageViewModel>();
         _notificationViewModel = Defaults.Locator.GetRequiredService<NotificationViewModel>();
         _clipboardService = Defaults.Locator.GetRequiredService<IClipboard>();
-        vaultContents = new ObservableCollection<KeyVaultContentsAmalgamation>() { };
+        vaultContents = [];
         BitmapImage = new Bitmap(AssetLoader.Open(new Uri("avares://KeyVaultExplorer/Assets/kv-orange.ico"))).CreateScaledBitmap(new Avalonia.PixelSize(24, 24), BitmapInterpolationMode.HighQuality);
 
 #if DEBUG
@@ -413,7 +413,7 @@ public partial class VaultPageViewModel : ViewModelBase
         //taskDialog.TitleBar.TitleBarHitTestType = TitleBarHitTestType.Complex;
 
         // open the window with parent on windows but not mac.
-
-        taskDialog.Show();
+        var top = Avalonia.Application.Current.GetTopLevel();
+        taskDialog.Show(top);
     }
 }
