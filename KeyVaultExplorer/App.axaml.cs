@@ -23,28 +23,9 @@ public partial class App : Application
         DataContext = new AppViewModel();
     }
 
-    public static void ConfigureDesktopServices()
-    {
-        IServiceCollection serviceCollection = new ServiceCollection();
-        serviceCollection.AddMemoryCache();
-        serviceCollection.AddSingleton<AuthService>();
-        serviceCollection.AddSingleton<VaultService>();
-        serviceCollection.AddSingleton<TabViewPageViewModel>();
-        serviceCollection.AddSingleton<ToolBarViewModel>();
-        serviceCollection.AddSingleton<KeyVaultTreeListViewModel>();
-        serviceCollection.AddSingleton<SettingsPageViewModel>();
-        serviceCollection.AddSingleton<MainViewModel>();
-        serviceCollection.AddSingleton<NotificationViewModel>();
-        serviceCollection.AddSingleton<KvExplorerDb>();
-        serviceCollection.AddTransient<AppSettingReader>();
-        serviceCollection.AddSingleton<IClipboard, ClipboardService>();
-        serviceCollection.AddSingleton<IStorageProvider, StorageProviderService>();
-        Defaults.Locator.ConfigureServices(serviceCollection.BuildServiceProvider());
-    }
-
     public static void CreateDesktopResources()
     {
-        System.IO.Directory.CreateDirectory(Constants.LocalAppDataFolder);
+        Directory.CreateDirectory(Constants.LocalAppDataFolder);
         var exists = File.Exists(Path.Combine(Constants.LocalAppDataFolder, "KeyVaultExplorer.db"));
         if (!exists)
             KvExplorerDb.InitializeDatabase();
@@ -72,20 +53,25 @@ public partial class App : Application
     {
         // Line below is needed to remove Avalonia data validation.
         // Without this line you will get duplicate validations from both Avalonia and CT
-        //BindingPlugins.DataValidators.RemoveAt(0);
+        // BindingPlugins.DataValidators.RemoveAt(0);
+
+        var collection = new ServiceCollection();
+        collection.AddCommonServices();
+        var services = collection.BuildServiceProvider();
+        var vm = services.GetRequiredService<MainViewModel>();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = Defaults.Locator.GetService<MainViewModel>()
+                DataContext = vm
             };
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
             singleViewPlatform.MainView = new MainView
             {
-                DataContext = Defaults.Locator.GetService<MainViewModel>()
+                DataContext = vm
             };
         }
 
