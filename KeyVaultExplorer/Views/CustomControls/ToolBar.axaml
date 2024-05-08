@@ -33,7 +33,7 @@
                         FontFamily="{StaticResource SymbolThemeFontFamily}"
                         FontSize="18"
                         Glyph="&#xE1D3;" />
-                    <TextBlock VerticalAlignment="Bottom" Text="Vault List" />
+                    <TextBlock VerticalAlignment="Center" Text="Vault List" />
                 </StackPanel>
             </Button.Content>
         </Button>
@@ -54,7 +54,7 @@
                         FontFamily="{StaticResource SymbolThemeFontFamily}"
                         FontSize="18"
                         Glyph="&#xE13C;" />
-                    <TextBlock VerticalAlignment="Bottom" Text="Subscriptions" />
+                    <TextBlock VerticalAlignment="Center" Text="Subscriptions" />
                 </StackPanel>
             </Button.Content>
         </Button>
