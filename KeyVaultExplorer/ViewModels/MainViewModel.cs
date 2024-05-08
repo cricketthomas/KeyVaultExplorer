@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FluentAvalonia.UI.Controls;
 using KeyVaultExplorer.Models;
 using KeyVaultExplorer.Services;
@@ -18,15 +19,13 @@ public partial class MainViewModel : ViewModelBase
     public string email;
 
     [ObservableProperty]
-    public string initials;
-
-    [ObservableProperty]
     public AuthenticatedUserClaims authenticatedUserClaims;
 
     [ObservableProperty]
     public bool isAuthenticated = false;
 
     private readonly AuthService _authService;
+
     public NavigationFactory NavigationFactory { get; }
 
     public MainViewModel()
@@ -35,6 +34,7 @@ public partial class MainViewModel : ViewModelBase
         NavigationFactory = new NavigationFactory();
     }
 
+  
     public async Task RefreshTokenAndGetAccountInformation()
     {
         var cancellation = new CancellationToken();
@@ -45,10 +45,6 @@ public partial class MainViewModel : ViewModelBase
         //.ClaimsPrincipal.Identities.First().FindFirst("email").Value.ToLowerInvariant();
         var identity = account.ClaimsPrincipal.Identities.First();
         var email = identity.FindAll("email").First().Value ?? account.Account.Username;
-
-        string[] name = identity.FindAll("name").First().Value.Split(" ");
-        if (name.Length > 1)
-            Initials = name[0][0].ToString().ToUpperInvariant() + name[1][0].ToString().ToUpperInvariant();
 
         Email = email.ToLowerInvariant();
 
@@ -62,6 +58,23 @@ public partial class MainViewModel : ViewModelBase
 
         IsAuthenticated = _authService.IsAuthenticated;
     }
+
+
+
+     [RelayCommand]
+    private async Task ForceSignIn()
+    {
+        var cancellation = new CancellationToken();
+        var account = await _authService.LoginAsync(cancellation);
+        Email = account.ClaimsPrincipal.Identities.First().FindFirst("email").Value;
+    }
+
+    [RelayCommand]
+    private async Task SignOut()
+    {
+        await _authService.RemoveAccount();
+    }
+
 }
 
 public class NavigationFactory : INavigationPageFactory

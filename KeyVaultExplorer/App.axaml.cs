@@ -17,7 +17,12 @@ namespace KeyVaultExplorer;
 
 public partial class App : Application
 {
-    public static void ConfigureDesktopServices()
+
+    public App()
+    {
+        DataContext = new AppViewModel();
+    }
+   public static void ConfigureDesktopServices()
     {
         IServiceCollection serviceCollection = new ServiceCollection();
         serviceCollection.AddMemoryCache();
@@ -33,12 +38,10 @@ public partial class App : Application
         serviceCollection.AddTransient<AppSettingReader>();
         serviceCollection.AddSingleton<IClipboard, ClipboardService>();
         serviceCollection.AddSingleton<IStorageProvider, StorageProviderService>();
-        Defaults.Locator.ConfigureServices(serviceCollection.BuildServiceProvider());
     }
-
     public static void CreateDesktopResources()
     {
-        System.IO.Directory.CreateDirectory(Constants.LocalAppDataFolder);
+        Directory.CreateDirectory(Constants.LocalAppDataFolder);
         var exists = File.Exists(Path.Combine(Constants.LocalAppDataFolder, "KeyVaultExplorer.db"));
         if (!exists)
             KvExplorerDb.InitializeDatabase();
@@ -46,15 +49,14 @@ public partial class App : Application
         string settingsPath = Path.Combine(Constants.LocalAppDataFolder, "settings.json");
         if (!File.Exists(settingsPath))
         {
-            var s = """
+            File.WriteAllText(settingsPath, """
                 {
                     "BackgroundTransparency": false,
                     "NavigationLayoutMode": "Left",
                     "AppTheme": "System",
                     "PaneDisplayMode": "inline"
                 }
-                """;
-            File.WriteAllText(settingsPath, s);
+                """);
         }
     }
 
@@ -67,20 +69,26 @@ public partial class App : Application
     {
         // Line below is needed to remove Avalonia data validation.
         // Without this line you will get duplicate validations from both Avalonia and CT
-        //BindingPlugins.DataValidators.RemoveAt(0);
+        // BindingPlugins.DataValidators.RemoveAt(0);
+
+        var collection = new ServiceCollection();
+        collection.AddCommonServices();
+        var services = collection.BuildServiceProvider();
+        Defaults.Locator.ConfigureServices(services);
+        var vm = services.GetRequiredService<MainViewModel>();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = Defaults.Locator.GetService<MainViewModel>()
+                DataContext = vm
             };
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
             singleViewPlatform.MainView = new MainView
             {
-                DataContext = Defaults.Locator.GetService<MainViewModel>()
+                DataContext = vm
             };
         }
 
@@ -108,4 +116,5 @@ public static class ApplicationExtensions
         }
         return null;
     }
+
 }

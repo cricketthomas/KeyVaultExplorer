@@ -37,7 +37,6 @@ internal class Program
         => AppBuilder.Configure<App>()
                  .AfterSetup(_ =>
                  {
-                     App.ConfigureDesktopServices();
                      App.CreateDesktopResources();
                      // HACK. https://github.com/AvaloniaUI/Avalonia/issues/14059
                      var x = Comparer<int>.Default;
@@ -49,7 +48,6 @@ internal class Program
                      var gn = Comparer<Guid?>.Default;
                      var dtn = Comparer<DateTime?>.Default;
                      var z = Comparer<PlatformID>.Default;
-
                  })
                 .UsePlatformDetect()
                 .LogToTrace();
