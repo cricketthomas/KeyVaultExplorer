@@ -88,6 +88,9 @@
     <Compile Update="Views\CustomControls\KeyVaultTreeList.axaml.cs">
       <DependentUpon>KeyVaultTreeList.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Pages\AboutPageWindow.axaml.cs">
+      <DependentUpon>AboutPageWindow.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Pages\TabViewWindowingPopout.axaml.cs">
       <DependentUpon>TabViewWindowingPopout.axaml</DependentUpon>
     </Compile>

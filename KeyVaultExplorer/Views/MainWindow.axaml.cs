@@ -87,7 +87,7 @@ public partial class MainWindow : AppWindow
             var tab = grid.Children[0] as TabViewPage;
             var dragRegion = tab.FindControl<Panel>("CustomDragRegion");
             dragRegion.Width = FlowDirection == Avalonia.Media.FlowDirection.LeftToRight ?
-                TitleBar.RightInset : TitleBar.LeftInset;
+                TitleBar.RightInset * 1.25 : TitleBar.LeftInset * 1.25;
         }
     }
 

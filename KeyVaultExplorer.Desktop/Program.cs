@@ -37,19 +37,17 @@ internal class Program
         => AppBuilder.Configure<App>()
                  .AfterSetup(_ =>
                  {
-                     App.ConfigureDesktopServices();
                      App.CreateDesktopResources();
                      // HACK. https://github.com/AvaloniaUI/Avalonia/issues/14059
                      var x = Comparer<int>.Default;
                      var y = Comparer<decimal>.Default;
                      var d = Comparer<DateTime>.Default;
                      var dto = Comparer<DateTimeOffset?>.Default;
-                     var ddon = Comparer<DateTimeOffset?>.Default;
+                     var dton = Comparer<DateTimeOffset?>.Default;
                      var g = Comparer<Guid>.Default;
                      var gn = Comparer<Guid?>.Default;
                      var dtn = Comparer<DateTime?>.Default;
                      var z = Comparer<PlatformID>.Default;
-
                  })
                 .UsePlatformDetect()
                 .LogToTrace();

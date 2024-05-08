@@ -95,9 +95,18 @@
                     <ui:SettingsExpander.Footer>
                         <ComboBox
                             MinWidth="150"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
                             ItemsSource="{Binding AppThemes}"
                             SelectedItem="{Binding CurrentAppTheme, Mode=TwoWay}"
-                            SelectionChanged="AppTheme_SelectionChanged" />
+                            SelectionChanged="AppTheme_SelectionChanged">
+<ComboBox.Styles>
+    <Style Selector="ComboBox /template/ ContentPresenter#ContentPresenter">
+    <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    </ComboBox.Styles>
+
+                            </ComboBox>
                     </ui:SettingsExpander.Footer>
 
                 </ui:SettingsExpander>
