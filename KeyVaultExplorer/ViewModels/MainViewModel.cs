@@ -46,8 +46,6 @@ public partial class MainViewModel : ViewModelBase
         var identity = account.ClaimsPrincipal.Identities.First();
         var email = identity.FindAll("email").First().Value ?? account.Account.Username;
 
-        string[] name = identity.FindAll("name").First().Value.Split(" ");
-
         Email = email.ToLowerInvariant();
 
         AuthenticatedUserClaims = new AuthenticatedUserClaims()
