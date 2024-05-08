@@ -1,7 +1,10 @@
 {
   "profiles": {
     "KeyVaultExplorer.Desktop": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "environmentVariables": {
+        "KEYVAULT_EXPLORER_CLIENT_ID": "00000000-0000000000-0000000000-0000000"
+      }
     },
     "WSL": {
       "commandName": "WSL2",

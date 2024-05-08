@@ -456,3 +456,4 @@ $RECYCLE.BIN/
 /KeyVaultExplorer.Desktop/publish-aot*
 /KeyVaultExplorer.Desktop/mac
 .DS_Store
+/KeyVaultExplorer.Desktop/Properties/launchSettings.json
