@@ -7,6 +7,7 @@ using Azure.Security.KeyVault.Keys;
 using Azure.Security.KeyVault.Secrets;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FluentAvalonia.UI.Controls;
 using KeyVaultExplorer.Exceptions;
 using KeyVaultExplorer.Models;
 using KeyVaultExplorer.Services;
@@ -158,6 +159,35 @@ public partial class PropertiesPageViewModel : ViewModelBase
             dataObject.Set(DataFormats.Text, value);
             await _clipboardService.SetTextAsync(value);
             ClearClipboardAsync().ConfigureAwait(false);
+        }
+        catch (KeyVaultItemNotFoundException ex)
+        {
+        }
+    }
+
+    [RelayCommand]
+    private async Task NewVersion()
+    {
+        try
+        {
+            var dialog = new ContentDialog()
+            {
+                Title = "My Dialog Title",
+                PrimaryButtonText = "Ok",
+                SecondaryButtonText = "Not OK",
+                CloseButtonText = "Close"
+            };
+
+            // Pass the dialog if you need to hide it from the ViewModel.
+            var viewModel = new CreateNewSecretVersionViewModel();
+
+            // In our case the Content is a UserControl, but can be anything.
+            dialog.Content = new CreateNewSecretVersion()
+            {
+                DataContext = viewModel
+            };
+
+            var result = await dialog.ShowAsync();
         }
         catch (KeyVaultItemNotFoundException ex)
         {
