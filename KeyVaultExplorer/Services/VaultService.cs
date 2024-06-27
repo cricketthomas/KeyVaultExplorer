@@ -309,4 +309,26 @@ public partial class VaultService
             yield return kvResource;
         }
     }
+
+    public async Task CreateOrUpdateSecret(SecretProperties secretProperties,KeyVaultSecret keyVaultSecret, Uri KeyVaultUri )
+    {
+        var token = new CustomTokenCredential(await _authService.GetAzureKeyVaultTokenSilent());
+        SecretClient client;
+        if(secretProperties is not null)
+        {
+         client = new SecretClient(KeyVaultUri, token);
+
+            await client.UpdateSecretPropertiesAsync(secretProperties);
+        }
+        else
+        {
+             client = new SecretClient(KeyVaultUri, token);
+
+            await client.SetSecretAsync(keyVaultSecret);
+        }
+
+    }
+
+
+
 }
