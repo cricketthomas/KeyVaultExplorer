@@ -185,6 +185,7 @@ public partial class VaultService
             }
         }
     }
+
     public async IAsyncEnumerable<KeyVaultResource> GetKeyVaultsByResourceGroup(ResourceGroupResource resource)
     {
         var armClient = new ArmClient(new CustomTokenCredential(await _authService.GetAzureArmTokenSilent()));
@@ -269,6 +270,7 @@ public partial class VaultService
     }
 
     public record SubscriptionResourceWithNextPageToken(SubscriptionResource SubscriptionResource, string ContinuationToken);
+
     public async IAsyncEnumerable<CertificateProperties> GetVaultAssociatedCertificates(Uri kvUri)
     {
         var token = new CustomTokenCredential(await _authService.GetAzureKeyVaultTokenSilent());
@@ -310,25 +312,20 @@ public partial class VaultService
         }
     }
 
-    public async Task CreateOrUpdateSecret(SecretProperties secretProperties,KeyVaultSecret keyVaultSecret, Uri KeyVaultUri )
+    public async Task CreateOrUpdateSecret(SecretProperties secretProperties, KeyVaultSecret keyVaultSecret, Uri KeyVaultUri)
     {
         var token = new CustomTokenCredential(await _authService.GetAzureKeyVaultTokenSilent());
         SecretClient client;
-        if(secretProperties is not null)
+        if (secretProperties is not null)
         {
-         client = new SecretClient(KeyVaultUri, token);
+            client = new SecretClient(KeyVaultUri, token);
 
             await client.UpdateSecretPropertiesAsync(secretProperties);
         }
         else
         {
-             client = new SecretClient(KeyVaultUri, token);
-
+            client = new SecretClient(KeyVaultUri, token);
             await client.SetSecretAsync(keyVaultSecret);
         }
-
     }
-
-
-
 }

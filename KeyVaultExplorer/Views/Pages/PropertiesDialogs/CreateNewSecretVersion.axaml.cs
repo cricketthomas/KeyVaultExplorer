@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Threading;
-
+using KeyVaultExplorer.ViewModels;
 namespace KeyVaultExplorer;
 
 public partial class CreateNewSecretVersion : UserControl
@@ -10,6 +10,7 @@ public partial class CreateNewSecretVersion : UserControl
     public CreateNewSecretVersion()
     {
         InitializeComponent();
+        DataContext = new CreateNewSecretVersionViewModel();
     }
 
     private void InputField_OnAttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)

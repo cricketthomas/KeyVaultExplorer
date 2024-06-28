@@ -15,6 +15,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -172,14 +173,15 @@ public partial class PropertiesPageViewModel : ViewModelBase
         {
             var dialog = new ContentDialog()
             {
-                Title = "My Dialog Title",
+                Title = "Edit Secret",
                 PrimaryButtonText = "Ok",
-                SecondaryButtonText = "Not OK",
-                CloseButtonText = "Close"
+                CloseButtonText = "Cancel"
             };
 
             // Pass the dialog if you need to hide it from the ViewModel.
             var viewModel = new CreateNewSecretVersionViewModel();
+            await ShouldShowValue(true);
+            viewModel.KeyVaultSecretModel = OpenedItem.SecretProperties;
 
             // In our case the Content is a UserControl, but can be anything.
             dialog.Content = new CreateNewSecretVersion()
