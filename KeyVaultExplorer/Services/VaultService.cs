@@ -312,20 +312,36 @@ public partial class VaultService
         }
     }
 
-    public async Task CreateOrUpdateSecret(SecretProperties secretProperties, KeyVaultSecret keyVaultSecret, Uri KeyVaultUri)
+    public async Task CreateSecret(KeyVaultSecret keyVaultSecret, Uri KeyVaultUri)
+    {
+        try
+        {
+            var token = new CustomTokenCredential(await _authService.GetAzureKeyVaultTokenSilent());
+            SecretClient client = new SecretClient(KeyVaultUri, token);
+            await client.SetSecretAsync(keyVaultSecret);
+        }
+        catch (Exception ex)
+        {
+            throw new KeyVaultItemNotFoundException(ex.Message, ex);
+        }
+    }
+
+    public async Task UpdateSecret(SecretProperties secretProperties, Uri KeyVaultUri)
     {
         var token = new CustomTokenCredential(await _authService.GetAzureKeyVaultTokenSilent());
-        SecretClient client;
-        if (secretProperties is not null)
-        {
-            client = new SecretClient(KeyVaultUri, token);
 
-            await client.UpdateSecretPropertiesAsync(secretProperties);
-        }
-        else
+        try
         {
-            client = new SecretClient(KeyVaultUri, token);
-            await client.SetSecretAsync(keyVaultSecret);
+            if (secretProperties is not null)
+            {
+                SecretClient client = new SecretClient(KeyVaultUri, token);
+
+                await client.UpdateSecretPropertiesAsync(secretProperties);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new KeyVaultItemNotFoundException(ex.Message, ex);
         }
     }
 }

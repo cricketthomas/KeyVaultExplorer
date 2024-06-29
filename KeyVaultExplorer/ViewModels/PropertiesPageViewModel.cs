@@ -85,7 +85,6 @@ public partial class PropertiesPageViewModel : ViewModelBase
         _storageService = Defaults.Locator.GetRequiredService<IStorageProvider>();
 
         OpenedItem = model;
-        IsManaged = false;
         Dispatcher.UIThread.InvokeAsync(async () =>
         {
             await GetPropertiesForKeyVaultValue(model);
@@ -186,7 +185,7 @@ public partial class PropertiesPageViewModel : ViewModelBase
             // Pass the dialog if you need to hide it from the ViewModel.
             var viewModel = new CreateNewSecretVersionViewModel();
             await ShouldShowValue(true);
-            viewModel.KeyVaultSecretModel = OpenedItem.SecretProperties;
+            viewModel.KeyVaultSecretModel = SecretPropertiesList.First();
 
             // In our case the Content is a UserControl, but can be anything.
             dialog.Content = new CreateNewSecretVersion()
@@ -217,7 +216,7 @@ public partial class PropertiesPageViewModel : ViewModelBase
             // Pass the dialog if you need to hide it from the ViewModel.
             var viewModel = new CreateNewSecretVersionViewModel();
             await ShouldShowValue(true);
-            viewModel.KeyVaultSecretModel = OpenedItem.SecretProperties;
+            viewModel.KeyVaultSecretModel = SecretPropertiesList.First();
             viewModel.IsEdit = true;
 
             // In our case the Content is a UserControl, but can be anything.

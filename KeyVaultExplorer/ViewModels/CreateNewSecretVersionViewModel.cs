@@ -20,7 +20,6 @@ public partial class CreateNewSecretVersionViewModel : ViewModelBase
     [ObservableProperty]
     private bool isEdit = false;
 
-
     [ObservableProperty]
     private string secretValue;
 
@@ -30,15 +29,12 @@ public partial class CreateNewSecretVersionViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(NotBeforeTimespan))]
     private SecretProperties keyVaultSecretModel;
 
-
-
     public TimeSpan? ExpiresOnTimespan => KeyVaultSecretModel?.ExpiresOn.Value.LocalDateTime.TimeOfDay;
 
     public TimeSpan? NotBeforeTimespan => KeyVaultSecretModel.NotBefore.HasValue ? KeyVaultSecretModel?.NotBefore.Value.LocalDateTime.TimeOfDay : null;
 
     public string? Location => KeyVaultSecretModel?.VaultUri.ToString();
     public string? Identifier => KeyVaultSecretModel?.Id.ToString();
-
 
     private readonly AuthService _authService;
     private readonly VaultService _vaultService;
@@ -51,9 +47,14 @@ public partial class CreateNewSecretVersionViewModel : ViewModelBase
         _notificationViewModel = Defaults.Locator.GetRequiredService<NotificationViewModel>();
     }
 
+    [RelayCommand]
+    public async Task EditDetails()
+    {
+        var properties = KeyVaultSecretModel;
+        properties.NotBefore = new DateTimeOffset(properties.NotBefore.Value.Date, NotBeforeTimespan.Value); ;
+        properties.ExpiresOn = new DateTimeOffset(properties.ExpiresOn.Value.Date, ExpiresOnTimespan.Value); ;
 
 
-    
-
-
+        await _vaultService.UpdateSecret(KeyVaultSecretModel, KeyVaultSecretModel.VaultUri);
+    }
 }

@@ -18,3 +18,20 @@ public class KeyVaultItemNotFoundException : Exception
     {
     }
 }
+
+public class KeyVaultItemNotFailedToUpdate : Exception
+{
+    public KeyVaultItemNotFailedToUpdate()
+    {
+    }
+
+    public KeyVaultItemNotFailedToUpdate(string message)
+        : base(message)
+    {
+    }
+
+    public KeyVaultItemNotFailedToUpdate(string message, Exception inner)
+        : base(message, inner)
+    {
+    }
+}
