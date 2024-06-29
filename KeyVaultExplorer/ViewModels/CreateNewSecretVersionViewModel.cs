@@ -18,6 +18,10 @@ public partial class CreateNewSecretVersionViewModel : ViewModelBase
     private bool isBusy = false;
 
     [ObservableProperty]
+    private bool isEdit = false;
+
+
+    [ObservableProperty]
     private string secretValue;
 
     [ObservableProperty]
@@ -30,7 +34,7 @@ public partial class CreateNewSecretVersionViewModel : ViewModelBase
 
     public TimeSpan? ExpiresOnTimespan => KeyVaultSecretModel?.ExpiresOn.Value.LocalDateTime.TimeOfDay;
 
-    public TimeSpan? NotBeforeTimespan => KeyVaultSecretModel?.NotBefore.Value.LocalDateTime.TimeOfDay;
+    public TimeSpan? NotBeforeTimespan => KeyVaultSecretModel.NotBefore.HasValue ? KeyVaultSecretModel?.NotBefore.Value.LocalDateTime.TimeOfDay : null;
 
     public string? Location => KeyVaultSecretModel?.VaultUri.ToString();
     public string? Identifier => KeyVaultSecretModel?.Id.ToString();
@@ -48,6 +52,8 @@ public partial class CreateNewSecretVersionViewModel : ViewModelBase
     }
 
 
+
+    
 
 
 }

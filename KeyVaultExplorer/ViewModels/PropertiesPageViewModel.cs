@@ -30,6 +30,9 @@ public partial class PropertiesPageViewModel : ViewModelBase
     private readonly IStorageProvider _storageService;
 
     [ObservableProperty]
+    private bool isManaged = false;
+
+    [ObservableProperty]
     private bool isSecret = false;
 
     [ObservableProperty]
@@ -82,6 +85,7 @@ public partial class PropertiesPageViewModel : ViewModelBase
         _storageService = Defaults.Locator.GetRequiredService<IStorageProvider>();
 
         OpenedItem = model;
+        IsManaged = false;
         Dispatcher.UIThread.InvokeAsync(async () =>
         {
             await GetPropertiesForKeyVaultValue(model);
@@ -100,13 +104,14 @@ public partial class PropertiesPageViewModel : ViewModelBase
 
             case KeyVaultItemType.Key:
                 var keyPropertiesList = new ObservableCollection<KeyProperties>(await _vaultService.GetKeyProperties(model.VaultUri, model.Name));
-
+                IsManaged = keyPropertiesList.First().Managed;
                 KeyPropertiesList = new ObservableCollection<KeyProperties>(keyPropertiesList);
                 IsKey = true;
                 break;
 
             case KeyVaultItemType.Secret:
                 var secretPropertiesList = new ObservableCollection<SecretProperties>(await _vaultService.GetSecretProperties(model.VaultUri, model.Name));
+                IsManaged = secretPropertiesList.First().Managed;
                 SecretPropertiesList = new ObservableCollection<SecretProperties>(secretPropertiesList);
                 IsSecret = true;
                 break;
@@ -173,9 +178,9 @@ public partial class PropertiesPageViewModel : ViewModelBase
         {
             var dialog = new ContentDialog()
             {
-                Title = "Edit Secret",
+                Title = "New Version",
                 PrimaryButtonText = "Ok",
-                CloseButtonText = "Cancel"
+                CloseButtonText = "Close",
             };
 
             // Pass the dialog if you need to hide it from the ViewModel.
@@ -195,6 +200,40 @@ public partial class PropertiesPageViewModel : ViewModelBase
         {
         }
     }
+
+
+    [RelayCommand]
+    private async Task EditVersion()
+    {
+        try
+        {
+            var dialog = new ContentDialog()
+            {
+                Title = "Edit Secret",
+                PrimaryButtonText = "Ok",
+                CloseButtonText = "Cancel"
+            };
+
+            // Pass the dialog if you need to hide it from the ViewModel.
+            var viewModel = new CreateNewSecretVersionViewModel();
+            await ShouldShowValue(true);
+            viewModel.KeyVaultSecretModel = OpenedItem.SecretProperties;
+            viewModel.IsEdit = true;
+
+            // In our case the Content is a UserControl, but can be anything.
+            dialog.Content = new CreateNewSecretVersion()
+            {
+                DataContext = viewModel
+            };
+
+            var result = await dialog.ShowAsync();
+        }
+        catch (KeyVaultItemNotFoundException ex)
+        {
+        }
+    }
+
+
 
     public async Task ClearClipboardAsync()
     {
