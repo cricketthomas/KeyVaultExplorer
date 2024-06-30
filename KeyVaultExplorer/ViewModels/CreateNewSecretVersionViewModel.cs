@@ -20,6 +20,12 @@ public partial class CreateNewSecretVersionViewModel : ViewModelBase
     [ObservableProperty]
     private bool isEdit = false;
 
+
+    public bool HasActivationDate => KeyVaultSecretModel is not null && KeyVaultSecretModel.NotBefore.HasValue;
+    public bool HasExpirationDate => KeyVaultSecretModel is not null && KeyVaultSecretModel.ExpiresOn.HasValue;
+
+
+
     [ObservableProperty]
     private string secretValue;
 
@@ -27,11 +33,12 @@ public partial class CreateNewSecretVersionViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(Location))]
     [NotifyPropertyChangedFor(nameof(ExpiresOnTimespan))]
     [NotifyPropertyChangedFor(nameof(NotBeforeTimespan))]
+    [NotifyPropertyChangedFor(nameof(HasActivationDate))]
+    [NotifyPropertyChangedFor(nameof(HasExpirationDate))]
     private SecretProperties keyVaultSecretModel;
 
-    public TimeSpan? ExpiresOnTimespan => KeyVaultSecretModel?.ExpiresOn.Value.LocalDateTime.TimeOfDay;
-
-    public TimeSpan? NotBeforeTimespan => KeyVaultSecretModel.NotBefore.HasValue ? KeyVaultSecretModel?.NotBefore.Value.LocalDateTime.TimeOfDay : null;
+    public TimeSpan? ExpiresOnTimespan => KeyVaultSecretModel is not null && KeyVaultSecretModel.ExpiresOn.HasValue ? KeyVaultSecretModel?.ExpiresOn.Value.LocalDateTime.TimeOfDay : null;
+    public TimeSpan? NotBeforeTimespan => KeyVaultSecretModel is not null && KeyVaultSecretModel.NotBefore.HasValue ? KeyVaultSecretModel?.NotBefore.Value.LocalDateTime.TimeOfDay : null;
 
     public string? Location => KeyVaultSecretModel?.VaultUri.ToString();
     public string? Identifier => KeyVaultSecretModel?.Id.ToString();
@@ -51,9 +58,22 @@ public partial class CreateNewSecretVersionViewModel : ViewModelBase
     public async Task EditDetails()
     {
         var properties = KeyVaultSecretModel;
-        properties.NotBefore = new DateTimeOffset(properties.NotBefore.Value.Date, NotBeforeTimespan.Value); ;
-        properties.ExpiresOn = new DateTimeOffset(properties.ExpiresOn.Value.Date, ExpiresOnTimespan.Value); ;
 
+        if (properties.NotBefore.HasValue)
+            properties.NotBefore = properties.NotBefore.Value.Date + (NotBeforeTimespan.HasValue ? NotBeforeTimespan.Value : TimeSpan.Zero);
+
+        if (properties.ExpiresOn.HasValue)
+            properties.ExpiresOn = properties.ExpiresOn.Value.Date + (ExpiresOnTimespan.HasValue ? ExpiresOnTimespan.Value : TimeSpan.Zero);
+
+
+        //if (NotBeforeTimespan.HasValue)
+        //    properties.NotBefore = new DateTimeOffset(properties.NotBefore.Value.Date, NotBeforeTimespan.HasValue ? NotBeforeTimespan.Value : new TimeSpan()); ;
+
+
+
+
+        //if (ExpiresOnTimespan.HasValue)
+        //    properties.ExpiresOn = new DateTimeOffset(properties.ExpiresOn.Value.Date, ExpiresOnTimespan.HasValue ? ExpiresOnTimespan.Value : new TimeSpan()); ;
 
         await _vaultService.UpdateSecret(KeyVaultSecretModel, KeyVaultSecretModel.VaultUri);
     }
