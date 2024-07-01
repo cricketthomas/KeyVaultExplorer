@@ -47,6 +47,10 @@ public class KeyVaultContentsAmalgamation
 
     private string? GetRelativeDateString(DateTime dateTime, bool isPast = false)
     {
+        if (dateTime < DateTime.Now)
+        {
+            return "Expired";
+        }
         TimeSpan timeSpan = isPast ? DateTime.Now.Subtract(dateTime) : dateTime.Subtract(DateTime.Now);
         int dayDifference = (int)timeSpan.TotalDays;
         int secondDifference = (int)timeSpan.TotalSeconds;
