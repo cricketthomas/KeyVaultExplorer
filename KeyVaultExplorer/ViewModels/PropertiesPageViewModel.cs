@@ -1,4 +1,5 @@
-﻿using Avalonia.Input;
+﻿using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Input.Platform;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
@@ -178,8 +179,8 @@ public partial class PropertiesPageViewModel : ViewModelBase
             var dialog = new ContentDialog()
             {
                 Title = "New Version",
-                PrimaryButtonText = "Ok",
-                CloseButtonText = "Close",
+                PrimaryButtonText = "Create Version",
+                CloseButtonText = "Cancel",
             };
 
             // Pass the dialog if you need to hide it from the ViewModel.
@@ -200,6 +201,11 @@ public partial class PropertiesPageViewModel : ViewModelBase
         }
     }
 
+    private async void OnPrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        var def = args.GetDeferral();
+        def.Complete();
+    }
 
     [RelayCommand]
     private async Task EditVersion()
@@ -209,15 +215,23 @@ public partial class PropertiesPageViewModel : ViewModelBase
             var dialog = new ContentDialog()
             {
                 Title = "Edit Secret",
-                PrimaryButtonText = "Ok",
+                PrimaryButtonText = "Apply Changes",
                 CloseButtonText = "Cancel"
             };
 
             // Pass the dialog if you need to hide it from the ViewModel.
             var viewModel = new CreateNewSecretVersionViewModel();
-            await ShouldShowValue(true);
+            bool? isEnabledSecret = SecretPropertiesList.First().Enabled;
+            if (isEnabledSecret is not null && isEnabledSecret is true)
+                await ShouldShowValue(true);
             viewModel.KeyVaultSecretModel = SecretPropertiesList.First();
             viewModel.IsEdit = true;
+            dialog.PrimaryButtonClick += async (sender, args) =>
+            {
+                var def = args.GetDeferral();
+                await viewModel.EditDetailsCommand.ExecuteAsync(null);
+                def.Complete();
+            };
 
             // In our case the Content is a UserControl, but can be anything.
             dialog.Content = new CreateNewSecretVersion()
@@ -231,8 +245,6 @@ public partial class PropertiesPageViewModel : ViewModelBase
         {
         }
     }
-
-
 
     public async Task ClearClipboardAsync()
     {
